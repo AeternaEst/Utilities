@@ -1,0 +1,50 @@
+  -- <summary> provides statistics for indexes on a database and table
+  -- Microsoft fragmentation Recommendation: 
+  -- if avg_fragmentation_in_percent >= 5 && <= 30 -> run reorganize command
+  -- if avg_fragmentation_in_percent > 30 -> run rebuild command</summary>
+  -- param1 - databaseId
+  -- param2 - objectid for the table
+  -- param3 - indexId
+  -- param4 - partitionNumber
+  -- param5 - mode
+  select * FROM sys.dm_db_index_physical_stats (6, 581577110, DEFAULT, DEFAULT, DEFAULT) 
+
+  -- <summary>Returns the ID for a specific database</summary>
+  SELECT DB_ID(N'Bunnings.Commerce.SharedEnvironments') AS [Database ID];  
+
+  -- <summary>Returns the ID for a specific table</summary>
+  USE [Bunnings.Commerce.SharedEnvironments]
+  SELECT OBJECT_ID('CommerceEntities')
+
+  -- <summary>Rebuilds a specific index</summary>
+  -- ALTER INDEX PK_CommerceEntities - Expand the required table -> Then Expand Index to find this value
+  -- ON CommerceEntities - The table name
+  USE [Bunnings.Commerce.SharedEnvironments]
+  ALTER INDEX PK_CommerceEntities ON CommerceEntities
+  REBUILD;
+
+  -- <summary>Reorganize a specific index</summary>
+  -- ALTER INDEX PK_CommerceEntities - Expand the required table -> Then Expand Index to find this value
+  -- ON CommerceEntities - The table name
+  USE [Bunnings.Commerce.SharedEnvironments];  
+  ALTER INDEX PK_CommerceEntities
+  ON CommerceEntities
+  REORGANIZE 
+
+  -- <summary>Rebuilds all indexes in a table</summary>
+  -- ON CommerceEntities - The table name
+  USE [Bunnings.Commerce.SharedEnvironments];
+  ALTER INDEX ALL ON CommerceEntities
+  REBUILD WITH (FILLFACTOR = 80, SORT_IN_TEMPDB = ON,
+  STATISTICS_NORECOMPUTE = ON);
+
+  -- <summary>Reorganizes all indexes in a table</summary>
+  -- ON CommerceEntities - The table name
+  USE [Bunnings.Commerce.SharedEnvironments];    
+  ALTER INDEX ALL ON HumanResources.Employee  
+  REORGANIZE ;  
+
+  -- <summary>Rebuilds all indexes in a database</summary>
+  USE [Bunnings.Website.Custom]
+  Exec sp_msforeachtable 'SET QUOTED_IDENTIFIER ON; ALTER INDEX ALL ON ? REBUILD'  
+

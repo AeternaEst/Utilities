@@ -48,3 +48,17 @@
   USE [Bunnings.Website.Custom]
   Exec sp_msforeachtable 'SET QUOTED_IDENTIFIER ON; ALTER INDEX ALL ON ? REBUILD'  
 
+ -- SHRINKING LOG FILES
+
+ -- Option 1 - Managment Studio
+-- Right-click the database, choose Properties, then Options.
+-- Make sure "Recovery model" is set to "Simple", not "Full"
+-- Click OK
+-- Right-click the database again, choose Tasks -> Shrink -> Files
+-- Change file type to "Log"
+
+-- Option 2 - SQL
+--Log name is not the file name but the logical name found under Properties -> Files
+ use [Bunnings.Commerce.TransactionConfig.AU]
+ ALTER DATABASE [Bunnings.Commerce.TransactionConfig.AU] SET RECOVERY SIMPLE
+ DBCC SHRINKFILE (Bunnings_MSCS_AUTest_transactionconfig_log, 1)

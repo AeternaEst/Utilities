@@ -1,0 +1,17 @@
+Sitecore 	Solr installation - Version 8 and below:
+
+1. Go to the App_Config/Include folder in the webroot and rename all lucene files to .example extension
+2. In the same folder rename all solr files (except the solr cloud ones) to .config extension
+3. Copy the matching Solr version for your sitecore version into the desired directory
+4. In the Solr/bin directory run solr with .\solr start
+5. In the Solr/bin directory open a powershell and run the following command: .\solr create -c sitecore_master_index
+6. Repeat step 5 for the rest of the indexes (can be seen in the Data/indexes folder or the Indexing Manager in the sitecore GUI)
+7. Go to the \server\solr\configsets and copy the basic_configs folder and rename it to sitecore_configs
+8. Go into the sitecore_configs folder and copy and rename the managed-schema.file to orig-schema.xml in the sitecore_configs folder
+9. Open the solrconfig.xml file and insert <schemaFactory class="ClassicIndexSchemaFactory"/> right under the <config> node
+10. Open Sitecore control panel and select "Generate the Solr Schema.xml file" under Indexing
+11. Set the source file to the file you renamed from managed-schema.file to orig-schema.xml
+12. Set the Target file to the same folder with the filename "schema.xml" and press generate
+13. Copy and replace the conf folder in all the cores with the conf from the sitecore_configs folder
+14. Restart solr by running .\solr restart -p 8983 and verify all the cores are loaded
+15. Restart Sitecore and reindex from the sitecore indexing manager and verify the data has been indexed successfully  

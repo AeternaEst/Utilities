@@ -1,0 +1,47 @@
+Sitecore 9 Solr Installation (SSL)
+
+1. Download and extract Solr
+2. Verify that keytool.exe exists in your java bin directory fx (C:\Program Files\Java\jre1.8.0_191\bin)
+3. Go to Environment Variables -> System Variables -> Select Path -> Edit -> Add the following entries to the list:
+	C:\Program Files\Java\jre1.8.0_191\bin\
+4. A reboot might be required
+5. Go to <SOLR DIR>/server/etc and run the following command:
+	keytool -genkeypair -alias solr-ssl -keyalg RSA -keysize 2048 -keypass secret -storepass secret -validity 9999 -keystore solr-ssl.keystore.jks -ext SAN=DNS:localhost,IP:192.168.1.3,IP:127.0.0.1 -dname "CN=localhost, OU=Organizational Unit, O=Organization, L=Location, ST=State, C=Country"
+6. Verify file solr-ssl.keystore.jks was created in the same folder
+7. Run the following command and enter "secret" as password:
+	keytool -importkeystore -srckeystore solr-ssl.keystore.jks -destkeystore solr-ssl.keystore.p12 -srcstoretype jks -deststoretype pkcs12
+8. Verify file solr-ssl.keystore.p12 was created in the same folder
+9. Double click on solr-ssl.keystore.p12 and follow the wizard. Choose "Trusted Root Certification Authorities" certificate store.
+10. Verify that the "localhost" certificate exist in certmgr under "Trusted Root Certification Authorities" and copy it to "Personal"
+11. Go to <SOLR DIR>/bin and edit the following section in solr.in.cmd:
+	set SOLR_SSL_KEY_STORE=etc/solr-ssl.keystore.jks
+	set SOLR_SSL_KEY_STORE_PASSWORD=secret
+	set SOLR_SSL_KEY_STORE_TYPE=JKS
+	set SOLR_SSL_TRUST_STORE=etc/solr-ssl.keystore.jks
+	set SOLR_SSL_TRUST_STORE_PASSWORD=secret
+	set SOLR_SSL_TRUST_STORE_TYPE=JKS
+	set SOLR_SSL_NEED_CLIENT_AUTH=false
+	set SOLR_SSL_WANT_CLIENT_AUTH=false
+12. Start Solr
+13. Verify can you can access solr with https
+
+Setup Solr as a windows service
+
+1. Download and extract Non-Sucking Service Manager (https://nssm.cc)
+2. Navigate to the install directory for example:E:\Misc\nssm-2.24\win64 and run the following command:
+	.\nssm install Solr6.6.3
+3. Select the \bin\solr.cmd in the Path and set the arguments to start -f -p 8983
+4. Create the service and go to Services and make sure the service exist and start it
+5. Verify that solr is running by running a ".\solr status" command from the bin directory
+6. Verify you can acccess Solr on http://127.0.0.1:8983/solr/#/
+
+Other nssm commands:
+.\nssm remove Solr6.6.3 confirm
+
+If opensll is required
+1. Download and unpack opensll (https://sourceforge.net/projects/openssl/)
+2. Go to Environment Variables -> System Variables -> Select Path -> Edit -> Add the following entries to the list:
+		E:\Misc\OpenSSL\bin\
+3. Run the following command:
+	openssl pkcs12 -in solr-ssl.keystore.p12 -out solr-ssl.pem
+4. Verify solr-ssl.pem file was created

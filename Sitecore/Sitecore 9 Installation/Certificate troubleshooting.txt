@@ -1,0 +1,9 @@
+Sitecore 9 SSL certificates troubleshoot
+
+* Verify that thumbprint matches your certificate for both sitecore and xconnect site
+* Make sure you can connect with http to xconnect site in browser
+* Make sure that the certificate is valid when looking through IIS bindings
+* Try set the App Pools to an admin user if the problem is insufficient rights
+* Find and remove non self signed certificates from the Trusted Root Certification Authorities by running below scripts:
+	Get-Childitem cert:\LocalMachine\root -Recurse | Where-Object {$_.Issuer -ne $_.Subject}
+	Get-Childitem cert:\LocalMachine\root -Recurse | Where-Object {$_.Issuer -ne $_.Subject} | Move-Item -Destination Cert:\LocalMachine\CA

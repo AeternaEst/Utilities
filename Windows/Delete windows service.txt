@@ -1,0 +1,3 @@
+C:\Windows\System32 -> sc.exe
+
+.\sc delete habitat_xconnect.dev.local-IndexWorker

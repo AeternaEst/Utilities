@@ -1,0 +1,5 @@
+
+Unable to install windows features through windows update:
+
+Set the following reg setting to 0:
+HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU -> UseWUServer

@@ -1,0 +1,4 @@
+config location: C:\ProgramData\Git
+commands:
+	- git difftool
+	- git difftool --dir-diff

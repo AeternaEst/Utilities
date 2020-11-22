@@ -17,3 +17,9 @@ Start-Process "--cd=$neosSharedSrcFolder" -FilePath "C:\Program Files\Git\git-ba
 # Open Visual Studio Code
 Start-Process $neosSrcFolder -FilePath "C:\Program Files\Microsoft VS Code\Code.exe"
 Start-Process $neosSharedSrcFolder -FilePath "C:\Program Files\Microsoft VS Code\Code.exe"
+
+# Open Outlook
+Start-Process -FilePath "C:\Program Files (x86)\Microsoft Office\root\Office16\OUTLOOK.EXE"
+
+#Open Powershell
+Start-Process -WorkingDirectory $neosSrcFolder -FilePath "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"

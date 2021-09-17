@@ -1,0 +1,29 @@
+“[nuget.org] Unable to load the service index for source https://api.nuget.org/v3/index.json.
+
+An error occurred while sending the request.
+
+Unable to connect to the remote server
+
+No connection could be made because the target machine actively refused it 127.0.0.1:8888″
+
+-----------------------------------------------------------------------------------------
+
+Open the file devenv.exe.config in a text editor. This can be found at the following location:
+C:\Program Files (x86)\Microsoft Visual Studio\<Year>\<Version>\Common7\IDE
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\Common7\IDE
+
+Find
+
+<defaultProxy enabled="true" useDefaultCredentials="true">
+    <proxy usesystemdefault="true" bypassonlocal="true" />
+ </defaultProxy>
+
+So, it looks like:
+<system.net>
+    <defaultProxy enabled="true" useDefaultCredentials="true">
+      <proxy usesystemdefault="true" bypassonlocal="true" />
+    </defaultProxy>
+    <settings>
+      <ipv6 enabled="true"/>
+    </settings>
+  </system.net>

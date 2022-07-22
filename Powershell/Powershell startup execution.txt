@@ -1,0 +1,25 @@
+76
+
+I finally got my PowerShell script to run automatically on every startup. You will need to create two files: the first is the Powershell script (e.g. script.ps1) and the second is a .cmd file that will contain commands that will run on the command prompt (e.g. startup.cmd).
+
+The second file is what needs to be executed when the computer starts up, and simply copy-pasting the .ps1 to the startup folder won't work, because that doesn't actually execute the script - it only opens the file with Notepad. You need to execute the .cmd which itself will execute the .ps1 using PowerShell. Ok, enough babbling and on to the steps:
+
+Create your .ps1 script and place it in a folder. I put it on my desktop for simplicity. The path would look something like this:
+%USERPROFILE%\Desktop\script.ps1
+
+Create a .cmd file and place it in
+%AppData%\Microsoft\Windows\Start Menu\Programs\Startup\startup.cmd
+
+Doing this will execute the cmd file every time on startup. Here is a link of how to create a .cmd file if you need help.
+
+Open the .cmd file with a text editor and enter the following lines:
+PowerShell -Command "Set-ExecutionPolicy Unrestricted" >> "%TEMP%\StartupLog.txt" 2>&1
+PowerShell %USERPROFILE%\Desktop\script.ps1 >> "%TEMP%\StartupLog.txt" 2>&1
+This will do two things:
+
+Set the Execution Policy of your PowerShell to Unrestricted. This is needed to run scripts or else PowerShell will not do it.
+Use PowerShell to execute the .ps1 script found in the path specified.
+This code is specifically for PowerShell v1.0. If you're running PowerShell v2.0 it might be a little different. In any case, check this source for the .cmd code.
+
+Save the .cmd file
+Now that you have your .ps1 and .cmd files in their respective paths and with the script for each, you are all set.

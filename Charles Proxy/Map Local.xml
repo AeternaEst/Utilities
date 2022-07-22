@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<?charles serialisation-version='2.0' ?>
+<mapLocal>
+  <toolEnabled>true</toolEnabled>
+  <mappings>
+    <mapLocalMapping>
+      <sourceLocation>
+        <protocol>https</protocol>
+        <host>*storm*</host>
+        <path>/dist/**/*.core.js</path>
+      </sourceLocation>
+      <dest>C:\Projects\neos\publish\cd.sdcneos.local\dist\js\core.js</dest>
+      <enabled>true</enabled>
+      <caseSensitive>false</caseSensitive>
+    </mapLocalMapping>
+    <mapLocalMapping>
+      <sourceLocation>
+        <protocol>https</protocol>
+        <host>*storm*</host>
+        <path>/dist/**/*.styles.css</path>
+      </sourceLocation>
+      <dest>C:\Projects\neos\publish\cd.sdcneos.local\dist\styles\themes\default\css\styles.css</dest>
+      <enabled>true</enabled>
+      <caseSensitive>true</caseSensitive>
+    </mapLocalMapping>
+    <mapLocalMapping>
+      <sourceLocation>
+        <protocol>https</protocol>
+        <host>*storm*</host>
+        <path>/dist/*</path>
+      </sourceLocation>
+      <dest>C:\Projects\neos\publish\cd.sdcneos.local\dist</dest>
+      <enabled>true</enabled>
+      <caseSensitive>true</caseSensitive>
+    </mapLocalMapping>
+  </mappings>
+</mapLocal>

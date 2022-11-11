@@ -1,3 +1,5 @@
+Below scripts are git scripts, not powershell
+
 View branches with no commits for 1 week
 for k in $(git branch | sed /\*/d); do 
   if [ -z "$(git log -1 --since='1 week ago' -s $k)" ]; then

@@ -1,4 +1,5 @@
-76
+
+OPTION 1 - .cmd file in startup folder: 
 
 I finally got my PowerShell script to run automatically on every startup. You will need to create two files: the first is the Powershell script (e.g. script.ps1) and the second is a .cmd file that will contain commands that will run on the command prompt (e.g. startup.cmd).
 
@@ -23,3 +24,13 @@ This code is specifically for PowerShell v1.0. If you're running PowerShell v2.0
 
 Save the .cmd file
 Now that you have your .ps1 and .cmd files in their respective paths and with the script for each, you are all set.
+
+OPTION 2 - Task Scheduler
+
+1. Search for "Task Scheduler"
+2. Right click -> Create basic task
+3. Trigger -> At log on
+4. Action -> Start a program
+5. Action setting "Program/script" -> PowerShell
+6. Action setting "Add arguments" -> -NoProfile -ExecutionPolicy Bypass -File "C:\projects\NEoS-Sitecore\neos-setup.ps1"
+7. Action setting "Start in" -> C:\projects\NEoS-Sitecore (location of script to be executed)
